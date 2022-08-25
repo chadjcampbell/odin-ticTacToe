@@ -27,6 +27,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
 }
 
 h3 {
@@ -40,4 +41,56 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 350px;
+    width: 350px;
+    margin-bottom: 30px;
+    border: black solid 1px;
+    background-color: rgb(227, 244, 248);
+}
+
+.field {
+    border: black solid 1px;
+}
+
+#players {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.playercard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin: 20px;
+    border: black 2px solid;
+    height: 50px;
+    width: 150px;
+    background-color: rgb(203, 245, 255);
+    font-size: 20px;
+}
+
+.shadow {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+#message {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+#reset {
+    margin-bottom: 20px;
+    background-color: rgb(213, 205, 255);
+    height: 40px;
+    width: 60px;
+    border-radius: 10px;
+    border: black 2px solid;
 }
