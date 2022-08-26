@@ -6,7 +6,11 @@ const gameBoard = (() => {
             field[i].textContent = gameBoard.gameArray[i];
         };
     }
-    return {gameArray, renderBoard};
+    const reset = function() {
+        gameArray = [];
+        renderBoard();
+    };
+    return {gameArray, renderBoard, reset};
 })();
 
 const gamePlay = (() => { 
@@ -16,9 +20,9 @@ const gamePlay = (() => {
             let index = this.getAttribute("data-index");
             if (gameBoard.gameArray[index] == undefined) {
                 gameBoard.gameArray[index] = currentPlayer.symbol;
+                gameBoard.renderBoard();
+                togglePlayer();
             }
-            gameBoard.renderBoard();
-            togglePlayer();
         };
         for (let i = 0; i < field.length; i++) {
             field[i].addEventListener('click', getIndex, false);
