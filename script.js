@@ -6,10 +6,13 @@ const gameBoard = (() => {
             field[i].textContent = gameBoard.gameArray[i];
         };
     }
-    const reset = function() {
-        gameArray = [];
+    let button = document.querySelector('#reset');
+    const reset = () => {
+        gameBoard.gameArray = [];
+        currentPlayer = player1;
         renderBoard();
     };
+    button.addEventListener('click', reset, false);
     return {gameArray, renderBoard, reset};
 })();
 
@@ -21,6 +24,7 @@ const gamePlay = (() => {
             if (gameBoard.gameArray[index] == undefined) {
                 gameBoard.gameArray[index] = currentPlayer.symbol;
                 gameBoard.renderBoard();
+                checkWin();
                 togglePlayer();
             }
         };
@@ -33,12 +37,12 @@ const gamePlay = (() => {
 
 let clickEvents = gamePlay.clickEvents();
 
-const Player = (name, symbol) => {
-    return {name, symbol};
+const Player = (name, symbol, win) => {
+    return {name, symbol, win};
 };
 
-const player1 = Player('Player 1', 'x')
-const player2 = Player('Player 2', 'o')
+const player1 = Player('Player 1', 'x', false)
+const player2 = Player('Player 2', 'o', false)
 
 let currentPlayer = player1;
 
@@ -51,6 +55,29 @@ const togglePlayer = function(currentplayer) {
     }
 };
 
-const checkWin = function(gameBoard) {
-
+const checkWin = function() {
+    let counter = 0;
+    const combos = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,4,8],
+        [2,4,6],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+    ];
+    for (let i=0; i<combos.length; i++) {
+        for (let j=0; j<3; j++) {
+            if (gameBoard.gameArray[combos[i][j]] == currentPlayer.symbol) {
+                counter++;
+            }
+            if (counter == 3) {
+                currentPlayer.win = true;
+            }
+        }
+    }
+    if (currentPlayer.win == true) {
+        alert(currentPlayer.name);
+    }
 };
