@@ -8,8 +8,12 @@ const gameBoard = (() => {
     }
     let button = document.querySelector('#reset');
     const reset = () => {
+        const message = document.querySelector('#message');
+        message.textContent = '';
         gameBoard.gameArray = [];
-        currentPlayer = player1;
+        player1 = Player('Player 1', 'x', false);
+        player2 = Player('Player 2', 'o', false);
+        togglePlayer();
         renderBoard();
     };
     button.addEventListener('click', reset, false);
@@ -41,22 +45,35 @@ const Player = (name, symbol, win) => {
     return {name, symbol, win};
 };
 
-const player1 = Player('Player 1', 'x', false)
-const player2 = Player('Player 2', 'o', false)
+let player1 = Player('Player 1', 'x', false);
+let player2 = Player('Player 2', 'o', false);
 
 let currentPlayer = player1;
 
 const togglePlayer = function(currentplayer) {
+    const p1div = document.querySelector('#player1');
+    const p2div = document.querySelector('#player2');
     if (currentPlayer == player1) {
         currentPlayer = player2;
+        p1div.classList.remove('active');
+        p2div.classList.add('active');
     }
     else {
         currentPlayer = player1;
+        p2div.classList.remove('active');
+        p1div.classList.add('active');
+    }
+    if (gameBoard.gameArray === []) {
+        currentPlayer = player1;
+        p2div.classList.remove('active');
+        p1div.classList.add('active');
     }
 };
 
-const checkWin = function() {
+let checkWin = () => {
+    const message = document.querySelector('#message');
     let counter = 0;
+    let drawCount = 0;
     const combos = [
         [0,1,2],
         [3,4,5],
@@ -72,12 +89,28 @@ const checkWin = function() {
             if (gameBoard.gameArray[combos[i][j]] == currentPlayer.symbol) {
                 counter++;
             }
-            if (counter == 3) {
+            if (counter === 3) {
                 currentPlayer.win = true;
+                break;
             }
+            
         }
+        counter = 0;
     }
-    if (currentPlayer.win == true) {
-        alert(currentPlayer.name);
+    if (currentPlayer.win === true) {
+        message.textContent = `${currentPlayer.name} wins!`
+        for (let i = 0; i < 9; i++) {
+            if (gameBoard.gameArray[i] == undefined) {
+                gameBoard.gameArray[i] = '';
+            }
+        };
     }
+    for (let i = 0; i < 9; i++) {
+        if (gameBoard.gameArray[i] != undefined) {
+            drawCount++
+        };
+        if (drawCount == 9 && currentPlayer.win == false) {
+            message.textContent = 'It\'s a draw!'
+        }
+    };
 };
