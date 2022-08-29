@@ -104,3 +104,11 @@ footer {
     transition: border-width 0.6s linear;
     
 }
+
+input {
+    width: 100px;
+    height: auto;
+    background-color: transparent;
+    border: none;
+    border-bottom: solid black 1px;
+}
